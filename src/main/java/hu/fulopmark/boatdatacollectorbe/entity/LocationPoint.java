@@ -6,7 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -19,10 +19,6 @@ public class LocationPoint {
     @Column(name = "id", nullable = false)
     private Long id;
 
-
-    @ManyToOne(optional = false)
-    private SailingSession sailingSession;
-
     @Column(nullable = false)
     private double latitude;
 
@@ -30,10 +26,10 @@ public class LocationPoint {
     private double longitude;
 
     @Column(nullable = false)
-    private LocalDateTime timestamp;
+    private Instant timestamp;
 
     @Column
-    private LocalDateTime inserted;
+    private Instant modDate = Instant.now();
 
     @Override
     public boolean equals(Object o) {
@@ -45,9 +41,8 @@ public class LocationPoint {
         if (Double.compare(that.latitude, latitude) != 0) return false;
         if (Double.compare(that.longitude, longitude) != 0) return false;
         if (!id.equals(that.id)) return false;
-        if (!sailingSession.equals(that.sailingSession)) return false;
         if (!timestamp.equals(that.timestamp)) return false;
-        return inserted != null ? inserted.equals(that.inserted) : that.inserted == null;
+        return modDate != null ? modDate.equals(that.modDate) : that.modDate == null;
     }
 
     @Override
@@ -55,13 +50,12 @@ public class LocationPoint {
         int result;
         long temp;
         result = id.hashCode();
-        result = 31 * result + sailingSession.hashCode();
         temp = Double.doubleToLongBits(latitude);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(longitude);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + timestamp.hashCode();
-        result = 31 * result + (inserted != null ? inserted.hashCode() : 0);
+        result = 31 * result + (modDate != null ? modDate.hashCode() : 0);
         return result;
     }
 }

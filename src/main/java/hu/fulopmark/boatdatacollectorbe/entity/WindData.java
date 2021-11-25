@@ -1,9 +1,12 @@
 package hu.fulopmark.boatdatacollectorbe.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -23,13 +26,10 @@ public class WindData {
     private double direction;
 
     @Column(nullable = false)
-    private LocalDateTime timestamp;
+    private Instant timestamp;
 
     @Column
-    private LocalDateTime inserted;
-
-    @ManyToOne(optional = false)
-    private SailingSession sailingSession;
+    private Instant modDate = Instant.now();
 
 
     @Override
@@ -43,8 +43,7 @@ public class WindData {
         if (Double.compare(windData.direction, direction) != 0) return false;
         if (!id.equals(windData.id)) return false;
         if (!timestamp.equals(windData.timestamp)) return false;
-        if (inserted != null ? !inserted.equals(windData.inserted) : windData.inserted != null) return false;
-        return sailingSession.equals(windData.sailingSession);
+        return modDate != null ? modDate.equals(windData.modDate) : windData.modDate == null;
     }
 
     @Override
@@ -57,8 +56,7 @@ public class WindData {
         temp = Double.doubleToLongBits(direction);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + timestamp.hashCode();
-        result = 31 * result + (inserted != null ? inserted.hashCode() : 0);
-        result = 31 * result + sailingSession.hashCode();
+        result = 31 * result + (modDate != null ? modDate.hashCode() : 0);
         return result;
     }
 }
