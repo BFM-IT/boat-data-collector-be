@@ -15,20 +15,21 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api/v1")
 public class LocationPointController {
 
     private final LocationPointRepository repository;
 
     private final LocationPointService service;
 
-    @GetMapping("/v1/locationPoints")
+    @GetMapping("/locationPoints")
     @ApiOperation(value = "${api.summary.all}")
     List<LocationPoint> all() {
         return repository.findAll();
     }
 
 
-    @GetMapping("/v1/locationPointsBetweenTimestamps")
+    @GetMapping("/locationPointsBetweenTimestamps")
     @ApiOperation(value = "${api.summary.betweenTimestamps}", notes = "${api.notes.betweenDescription}")
     List<LocationPoint> betweenTimestamps(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant start,
@@ -36,7 +37,7 @@ public class LocationPointController {
         return repository.findAllByTimestampBetweenOrderByTimestampDesc(start, end);
     }
 
-    @GetMapping("/v1/distanceBetweenTimestamps")
+    @GetMapping("/distanceBetweenTimestamps")
     @ApiOperation(value = "Calculate sum of distances between points in a time interval")
     Distance distanceBetweenPointsBetweenTimestamps(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant start,
@@ -48,13 +49,13 @@ public class LocationPointController {
 
     }
 
-    @PostMapping("/v1/locationPoints")
+    @PostMapping("/locationPoints")
     @ApiOperation(value = "${api.summary.new}")
     LocationPoint newLocationPoint(@RequestBody LocationPoint newLocationPoint) {
         return repository.save(newLocationPoint);
     }
 
-    @GetMapping("/v1/locationPoints/{id}")
+    @GetMapping("/locationPoints/{id}")
     @ApiOperation(value = "${api.summary.one}")
     LocationPoint one(@PathVariable Long id) {
 
@@ -62,7 +63,7 @@ public class LocationPointController {
                 .orElseThrow(() -> new IllegalArgumentException("LocationPoint not found with id " + id));
     }
 
-    @PutMapping("/v1/locationPoints/{id}")
+    @PutMapping("/locationPoints/{id}")
     @ApiOperation(value = "${api.summary.replace}")
     LocationPoint replaceLocationPoint(@RequestBody LocationPoint newLocationPoint, @PathVariable Long id) {
 
@@ -80,7 +81,7 @@ public class LocationPointController {
                 });
     }
 
-    @DeleteMapping("/v1/locationPoints/{id}")
+    @DeleteMapping("/locationPoints/{id}")
     @ApiOperation(value = "${api.summary.delete}")
     void deleteLocationPoint(@PathVariable Long id) {
         repository.deleteById(id);

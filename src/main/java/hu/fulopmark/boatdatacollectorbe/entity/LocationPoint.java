@@ -28,7 +28,7 @@ public class LocationPoint {
     @Column(nullable = false)
     private Instant timestamp;
 
-    @Column
+    @Column(nullable = false)
     private Instant modDate = Instant.now();
 
     @Override

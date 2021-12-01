@@ -17,7 +17,7 @@ public class LocationPointService {
      * Calculate the sum of distances between an array of 2D points.
      * Currently ignores altitude.
      *
-     * @param locationPoints MUST BE ORDERED BY TIMESTAMP ASC!
+     * @param locationPoints
      * @return Sum of distances between the specified points, in meters.
      */
     public double sumDistanceBetweenPoints(List<LocationPoint> locationPoints) {

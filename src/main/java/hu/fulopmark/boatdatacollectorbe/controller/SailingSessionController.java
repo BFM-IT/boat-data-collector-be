@@ -11,25 +11,26 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api/v1")
 public class SailingSessionController {
 
     private final SailingSessionRepository repository;
 
-    @GetMapping("/v1/sailingSessions")
+    @GetMapping("/sailingSessions")
     @ApiOperation(value = "${api.summary.all}")
     List<SailingSession> all() {
         return repository.findAll();
     }
 
 
-    @PostMapping("/v1/sailingSessions")
+    @PostMapping("/sailingSessions")
     @ApiOperation(value = "${api.summary.new}")
     SailingSession newSailingSession(@RequestBody SailingSession newSailingSession) {
         return repository.save(newSailingSession);
     }
 
 
-    @GetMapping("/v1/sailingSessions/{id}")
+    @GetMapping("/sailingSessions/{id}")
     @ApiOperation(value = "${api.summary.one}")
     SailingSession one(@PathVariable Long id) {
 
@@ -37,7 +38,7 @@ public class SailingSessionController {
                 .orElseThrow(() -> new IllegalArgumentException("SailingSession not found with id " + id));
     }
 
-    @PutMapping("/v1/sailingSessions/{id}")
+    @PutMapping("/sailingSessions/{id}")
     @ApiOperation(value = "${api.summary.replace}")
     SailingSession replaceSailingSession(@RequestBody SailingSession newSailingSession, @PathVariable Long id) {
 
@@ -56,7 +57,7 @@ public class SailingSessionController {
     }
 
 
-    @DeleteMapping("/v1/sailingSessions/{id}")
+    @DeleteMapping("/sailingSessions/{id}")
     @ApiOperation(value = "${api.summary.delete}")
     void deleteSailingSession(@PathVariable Long id) {
         repository.deleteById(id);

@@ -28,7 +28,7 @@ public class WindData {
     @Column(nullable = false)
     private Instant timestamp;
 
-    @Column
+    @Column(nullable = false)
     private Instant modDate = Instant.now();
 
 

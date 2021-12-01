@@ -7,7 +7,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Entity
 @ToString
@@ -22,7 +21,7 @@ public class SailingSession {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime start;
+    private Instant start;
 
     @Column
     private Instant end;

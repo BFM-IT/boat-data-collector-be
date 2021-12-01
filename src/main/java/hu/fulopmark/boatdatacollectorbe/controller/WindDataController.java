@@ -12,18 +12,19 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api/v1")
 public class WindDataController {
 
     private final WindDataRepository repository;
 
 
-    @GetMapping("/v1/windDatas")
+    @GetMapping("/windDatas")
     @ApiOperation(value = "${api.summary.all}")
     List<WindData> all() {
         return repository.findAll();
     }
 
-    @GetMapping("/v1/windDatasBetweenTimestamps")
+    @GetMapping("/windDatasBetweenTimestamps")
     @ApiOperation(value = "${api.summary.betweenTimestamps}", notes = "${api.notes.betweenDescription}")
     List<WindData> betweenTimestamps(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant start,
@@ -31,13 +32,13 @@ public class WindDataController {
         return repository.findAllByTimestampBetweenOrderByTimestampDesc(start, end);
     }
 
-    @PostMapping("/v1/windDatas")
+    @PostMapping("/windDatas")
     @ApiOperation(value = "${api.summary.new}")
     WindData newWindData(@RequestBody WindData newWindData) {
         return repository.save(newWindData);
     }
 
-    @GetMapping("/v1/windDatas/{id}")
+    @GetMapping("/windDatas/{id}")
     @ApiOperation(value = "${api.summary.one}")
     WindData one(@PathVariable Long id) {
 
@@ -45,7 +46,7 @@ public class WindDataController {
                 .orElseThrow(() -> new IllegalArgumentException("WindData not found with id " + id));
     }
 
-    @PutMapping("/v1/windDatas/{id}")
+    @PutMapping("/windDatas/{id}")
     @ApiOperation(value = "${api.summary.replace}")
     WindData replaceWindData(@RequestBody WindData newWindData, @PathVariable Long id) {
 
