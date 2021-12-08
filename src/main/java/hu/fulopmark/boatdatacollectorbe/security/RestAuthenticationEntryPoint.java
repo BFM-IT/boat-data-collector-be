@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
 
 @Component("restAuthenticationEntryPoint")
 @Slf4j
@@ -23,7 +24,14 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getOutputStream().println("{ \"error\": \"" + authenticationException.getMessage() + "\" }");
+        String responseJson = "{ \"timestamp\": \"" + Instant.now() + "\"," +
+                "\"status\": " + HttpServletResponse.SC_UNAUTHORIZED + "," +
+                "\"error\": \"Unathorized\"," +
+                "\"message\": \"" + authenticationException.getMessage() + "\"," +
+                "\"path\": \"" + request.getRequestURI() + "\"}";
+
+        response.getOutputStream().println(responseJson);
+        //response.getOutputStream().println("{ \"timestamp\": \"" +  \"error\": \"" + authenticationException.getMessage() + "\" }");
 
     }
 }
