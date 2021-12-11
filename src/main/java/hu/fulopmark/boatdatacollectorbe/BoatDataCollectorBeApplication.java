@@ -16,6 +16,7 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import static java.util.Collections.singletonList;
 
@@ -44,9 +45,9 @@ public class BoatDataCollectorBeApplication {
                         .description("Data collector API for sailboats.")
                         .version(buildVersion + "-" + buildTimestamp).contact(new Contact("Fülöp Márk", "https://fulopmark.hu/", null)).build())
                 .select()
-
                 .apis(RequestHandlerSelectors.basePackage("hu.fulopmark.boatdatacollectorbe.controller"))
                 .paths(PathSelectors.any())
+                .paths(Predicate.not(PathSelectors.ant("/error")))
                 .build()
                 .securitySchemes(singletonList(apiKey()))
                 .securityContexts(singletonList(securityContext()));
