@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
+@Table(schema = "boat_api")
 @ToString
 @Getter
 @Setter
@@ -21,10 +22,10 @@ public class SailingSession {
     private Long id;
 
     @Column(nullable = false)
-    private Instant start;
+    private Instant startedAt;
 
     @Column
-    private Instant end;
+    private Instant endedAt;
 
 
     @Column(nullable = false)
@@ -41,8 +42,8 @@ public class SailingSession {
         SailingSession that = (SailingSession) o;
 
         if (!id.equals(that.id)) return false;
-        if (!start.equals(that.start)) return false;
-        if (!end.equals(that.end)) return false;
+        if (!startedAt.equals(that.startedAt)) return false;
+        if (!endedAt.equals(that.endedAt)) return false;
         if (!modDate.equals(that.modDate)) return false;
         return description != null ? description.equals(that.description) : that.description == null;
     }
@@ -50,8 +51,8 @@ public class SailingSession {
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + start.hashCode();
-        result = 31 * result + end.hashCode();
+        result = 31 * result + startedAt.hashCode();
+        result = 31 * result + endedAt.hashCode();
         result = 31 * result + modDate.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;

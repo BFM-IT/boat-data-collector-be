@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
+@Table(schema = "boat_api")
 @Getter
 @Setter
 @ToString

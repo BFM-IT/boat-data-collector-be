@@ -44,8 +44,8 @@ public class SailingSessionController {
 
         return repository.findById(id)
                 .map(sailingSession -> {
-                    sailingSession.setStart(newSailingSession.getStart());
-                    sailingSession.setEnd(newSailingSession.getEnd());
+                    sailingSession.setStartedAt(newSailingSession.getStartedAt());
+                    sailingSession.setEndedAt(newSailingSession.getEndedAt());
                     sailingSession.setDescription(newSailingSession.getDescription());
                     sailingSession.setModDate(Instant.now());
                     return repository.save(sailingSession);
